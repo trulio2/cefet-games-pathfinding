@@ -103,16 +103,19 @@ public class Agent {
         path.clear();
         pathFinder.metrics.reset();
         // AQUI ESTAMOS CHAMANDO O ALGORITMO A* (instância pathFinder) 
-        pathFinder.searchConnectionPath(startNode, targetNode, 
-                new Heuristic<TileNode>() { 
+        pathFinder.searchConnectionPath(startNode, targetNode,
+                new Heuristic<TileNode>() {
  
             @Override 
-            public float estimate(TileNode n, TileNode n1) { 
-                throw new UnsupportedOperationException("Deveria ter retornado "
-                        + "um valor para a heurística no arquivo "
-                        + "Agent.java:107, mas o professor resolveu explodir "
-                        + "o programa e deixar você consertar ;)"); 
+            public float estimate(TileNode n, TileNode n1) {
+                //return 0;
+                //return n.getPosition().dst(n1.getPosition())/LevelManager.tileWidth;
+                float dx = Math.abs(n.getPosition().x - n1.getPosition().x);
+                float dy = Math.abs(n.getPosition().y - n1.getPosition().y);
+                return (2*(dx + dy)+(-2)*Math.min(dx, dy))/LevelManager.tileWidth;
+                
             } 
+            
         }, path); 
         pathIterator = path.iterator();
     }
